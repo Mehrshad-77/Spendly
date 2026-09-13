@@ -29,7 +29,7 @@
 - **API:** FastAPI + Pydantic, served with Uvicorn
 - **Storage:** CSV, with `decimal.Decimal` for exact currency arithmetic
 - **Frontend:** Vanilla HTML/CSS/JS — no framework, no build step, served directly by FastAPI
-- **Desktop:** pywebview (native window around the web app), packaged with PyInstaller
+- **Desktop:** pywebview (native window around the web app), packaged with PyInstaller and Inno Setup
 - **Testing:** pytest (core logic + CLI) and FastAPI's `TestClient` (API)
 
 ## Getting started
@@ -78,6 +78,16 @@ pyinstaller pyinstaller\windows.spec
 
 The built app will be in `pyinstaller\dist\Spendly.exe`.
 
+## Building the installer
+
+Requires [Inno Setup](https://jrsoftware.org/isinfo.php) and the `.exe` above already built.
+
+```bash
+iscc installer\setup.iss
+```
+
+The installer will be in `installer\dist\Spendly-Setup-1.0.0.exe`.
+
 ## Running tests
 
 ```bash
@@ -96,6 +106,8 @@ Spendly/
 ├── expense-tracker-preview.html   # Web frontend (vanilla HTML/CSS/JS)
 ├── pyinstaller/
 │   └── windows.spec                # PyInstaller build spec for the desktop app
+├── installer/
+│   └── setup.iss                   # Inno Setup script for the Windows installer
 ├── test_tracker.py                # pytest suite for tracker.py / CLI logic
 ├── test_api.py                    # FastAPI TestClient suite for api.py
 └── requirements.txt
@@ -103,7 +115,7 @@ Spendly/
 
 ## Roadmap
 
-- [ ] Wrap the built `.exe` in an Inno Setup installer (Start Menu shortcut, uninstaller)
+- [x] Wrap the built `.exe` in an Inno Setup installer (Start Menu shortcut, uninstaller)
 
 ## License
 
