@@ -41,7 +41,7 @@ def wait_until_ready(host, port, timeout=5.0):
 def run_in_window(server):
     """Open a native window onto the running server."""
     window = webview.create_window(
-        "Expense Tracker",
+        "Spendly",
         f"http://{server.host}:{server.port}",
         width=1100,
         height=750,

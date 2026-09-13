@@ -2,6 +2,19 @@ import os
 import csv
 import datetime
 from decimal import Decimal
+from platformdirs import user_data_dir
+
+APP_NAME = "Spendly"
+APP_AUTHOR = "Mehrshad"
+
+
+def default_csv_path():
+    """Where the CSV lives when no explicit path is given: the OS's
+    standard per-user data directory, not wherever the app happens to be
+    installed (which may not be writable, e.g. Program Files on Windows)."""
+    data_dir = user_data_dir(APP_NAME, APP_AUTHOR)
+    os.makedirs(data_dir, exist_ok=True)
+    return os.path.join(data_dir, "Tracker.csv")
 
 #a class for expenses
 class Expense:
@@ -20,8 +33,8 @@ class Expense:
             self.date = date
 
 class ExpenseTracker:
-    def __init__(self, csv_file = "Tracker.csv"):
-        self.csv_file = csv_file
+    def __init__(self, csv_file=None):
+        self.csv_file = csv_file if csv_file is not None else default_csv_path()
         self.expenses = []
         self.load_from_csv()
 
