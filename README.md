@@ -36,8 +36,8 @@
 
 ```bash
 # Clone the repo
-git clone https://github.com/Mehrshad-77/ExpenseTracker.git
-cd ExpenseTracker
+git clone https://github.com/Mehrshad-77/Spendly.git
+cd Spendly
 
 # Create and activate a virtual environment
 python -m venv venv
@@ -76,7 +76,7 @@ pip install pyinstaller
 pyinstaller pyinstaller\windows.spec
 ```
 
-The built app will be in `pyinstaller\dist\ExpenseTracker.exe`.
+The built app will be in `pyinstaller\dist\Spendly.exe`.
 
 ## Running tests
 
@@ -88,7 +88,7 @@ python test_api.py        # API endpoints — 24 tests
 ## Project structure
 
 ```
-ExpenseTracker/
+Spendly/
 ├── main.py                        # Interactive terminal CLI
 ├── tracker.py                     # ExpenseTracker — storage & business logic (CSV, Decimal math)
 ├── api.py                         # FastAPI app — REST endpoints, serves the web frontend

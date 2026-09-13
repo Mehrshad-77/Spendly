@@ -29,7 +29,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name="ExpenseTracker",
+    name="Spendly",
     icon=None,
     debug=False,
     bootloader_ignore_signals=False,
