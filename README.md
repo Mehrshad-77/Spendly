@@ -1,122 +1,279 @@
-<h1 align="center">SPENDLY</h1>
+<div align="center">
+  <table>
+    <tr>
+      <td valign="middle" style="border: none; padding-right: 18px;">
+        <img src="assets/spendly-icon-128.png" alt="Spendly wallet logo" width="96">
+      </td>
+      <td valign="middle" style="border: none;">
+        <h1>Spendly</h1>
+        <p><strong>Track your spending. Stay in control.</strong></p>
+      </td>
+    </tr>
+  </table>
 
-<p align="center">
-  A personal expense tracker with exact decimal money math — use it as a terminal app or a local web app, both backed by the same core.
-</p>
+  <p>A lightweight personal expense tracker built with Python, FastAPI, and a vanilla HTML/CSS/JavaScript frontend.</p>
 
-<p align="center">
-  <img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-blue">
-  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green">
-  <img alt="Tests: 43 passing" src="https://img.shields.io/badge/tests-43%20passing-brightgreen">
-</p>
+  <p>
+    <img alt="Python 3.13" src="https://img.shields.io/badge/Python-3.13+-3776AB?logo=python&logoColor=white">
+    <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-0.110+-009688?logo=fastapi&logoColor=white">
+    <img alt="License MIT" src="https://img.shields.io/badge/License-MIT-0F5132">
+  </p>
+</div>
 
 ---
 
+## Overview
+
+**Spendly** is a personal expense tracker designed as a practical Python software-engineering project. It provides both an interactive command-line interface and a local web application while keeping the core expense logic in a shared `ExpenseTracker` class.
+
+The project focuses on clean separation of concerns, persistent data, exact monetary calculations, API design, validation, testing, and a simple user interface without introducing a frontend framework or build system.
+
 ## Features
 
-- **Two interfaces, one core** — an interactive terminal CLI (`main.py`) and a FastAPI + HTML/JS web app (`api.py`), both built on the same `ExpenseTracker` class so behavior never drifts between them
-- **Exact money math** — amounts are `Decimal` end-to-end on the backend and integer cents in the frontend, so totals never accumulate floating-point rounding errors
-- **Full CRUD** — add, edit, and delete expenses, or wipe everything and start fresh
-- **Search & filter** — case/whitespace-insensitive name search, and filtering by category, month, or both
-- **Spending totals** — total spend for a given month/year or a given category
-- **Sortable views** — by date, amount, or name, ascending or descending
-- **Persistent storage** — CSV-backed, with safe handling of malformed rows and I/O errors
-- **Self-contained web app** — the FastAPI backend serves the frontend directly at `/`, so there's no separate origin, no CORS setup, and no build step
+- **Expense management** — add, edit, delete, and delete all expenses.
+- **Categories** — Food, Transport, Entertainment, Education, Bills, and Other.
+- **Search** — find expenses by name.
+- **Filtering** — filter expenses by category or month.
+- **Sorting** — sort expenses by date, value, or name in ascending or descending order in the CLI.
+- **Spending summaries** — calculate total spending for a month/year or category.
+- **Exact money calculations** — backend amounts use Python's `Decimal` instead of binary floating-point arithmetic.
+- **Persistent storage** — expenses are stored in a CSV file in the user's OS-specific application-data directory.
+- **REST API** — FastAPI endpoints expose the expense-management functionality.
+- **Web interface** — the frontend is served directly by FastAPI; no separate frontend server or build step is required.
+- **Desktop app support** — the project includes a `pywebview` desktop wrapper and Windows packaging configuration.
+- **Automated tests** — tests cover the tracker logic and API behavior.
 
 ## Tech stack
 
-- **Language:** Python
-- **API:** FastAPI + Pydantic, served with Uvicorn
-- **Storage:** CSV, with `decimal.Decimal` for exact currency arithmetic
-- **Frontend:** Vanilla HTML/CSS/JS — no framework, no build step, served directly by FastAPI
-- **Desktop:** pywebview (native window around the web app), packaged with PyInstaller and Inno Setup
-- **Testing:** pytest (core logic + CLI) and FastAPI's `TestClient` (API)
+| Layer | Technology |
+|---|---|
+| Language | Python |
+| API | FastAPI + Pydantic |
+| Server | Uvicorn |
+| Desktop wrapper | pywebview |
+| Storage | CSV |
+| Money | `decimal.Decimal` |
+| Frontend | HTML, CSS, JavaScript |
+| Testing | pytest + FastAPI `TestClient` |
+| Packaging | PyInstaller + Inno Setup |
+
+## Project structure
+
+```text
+Spendly/
+├── assets/
+│   └── spendly-icon*.png          # Spendly wallet/app icon assets
+├── packaging/
+│   ├── spendly.ico               # Windows application icon
+│   ├── spendly.spec              # PyInstaller configuration
+│   └── Spendly.iss               # Inno Setup installer configuration
+├── api.py                         # FastAPI application and REST endpoints
+├── desktop.py                     # pywebview desktop application wrapper
+├── expense-tracker-preview.html   # Web frontend
+├── main.py                        # Interactive CLI
+├── tracker.py                     # Expense model, storage, and business logic
+├── test_api.py                    # API tests
+├── test_tracker.py                # Tracker/CLI tests
+├── requirements.txt               # Python dependencies
+├── Tracker.csv                    # Local/sample expense data
+├── LICENSE                        # MIT license
+└── README.md
+```
 
 ## Getting started
 
-```bash
-# Clone the repo
-git clone https://github.com/Mehrshad-77/Spendly.git
-cd Spendly
-
-# Create and activate a virtual environment
-python -m venv venv
-source venv/bin/activate       # Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### Run the CLI
+### 1. Clone the repository
 
 ```bash
-python main.py
+git clone https://github.com/Mehrshad-77/ExpenseTracker.git
+cd ExpenseTracker
 ```
 
-### Run the web app
+### 2. Create a virtual environment
+
+**Windows PowerShell:**
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+
+**macOS / Linux:**
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+## Run Spendly
+
+### Web application
+
+Start the FastAPI server:
 
 ```bash
 uvicorn api:app --reload
 ```
 
-Then open **http://127.0.0.1:8000** — the API and frontend are served from the same app, so nothing else needs to run.
+Then open:
 
-### Run the desktop app
+```text
+http://127.0.0.1:8000
+```
+
+The API and frontend are served by the same FastAPI application, so no separate frontend development server is needed.
+
+### Command-line application
+
+Run the CLI with:
+
+```bash
+python main.py
+```
+
+### Desktop application
+
+Spendly also includes a `pywebview` wrapper in `desktop.py`. Run it with:
 
 ```bash
 python desktop.py
 ```
 
-Opens the same web app in a native window. If no GUI backend is available (e.g. GTK/Qt aren't installed), it falls back to running headless in the terminal — press Ctrl+C to stop.
+This starts the local API and opens the Spendly interface in a native desktop window.
 
-## Building a Windows executable
+## API
+
+The FastAPI application exposes endpoints for the main expense operations.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/` | Serve the Spendly frontend |
+| `GET` | `/categories` | Get supported categories |
+| `GET` | `/expenses` | List expenses |
+| `POST` | `/expenses` | Create an expense |
+| `PATCH` | `/expenses/{id}` | Edit an expense |
+| `DELETE` | `/expenses/{id}` | Delete an expense |
+| `DELETE` | `/expenses` | Delete all expenses |
+| `GET` | `/expenses/search` | Search by expense name |
+| `GET` | `/expenses/filter` | Filter by category/month |
+| `GET` | `/expenses/spending/month` | Calculate monthly spending |
+| `GET` | `/expenses/spending/category` | Calculate category spending |
+
+FastAPI also provides interactive API documentation while the server is running:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+## Data storage
+
+Spendly uses CSV persistence through `tracker.py`.
+
+By default, the application stores `Tracker.csv` in the operating system's per-user application-data directory using `platformdirs`. This avoids relying on the installation directory, which may not be writable on Windows when the application is installed under locations such as `Program Files`.
+
+The stored fields are:
+
+```text
+ID, Category, Name, Value, Date
+```
+
+Money values are represented with `Decimal` to avoid common floating-point rounding problems.
+
+## Testing
+
+Run the tracker tests with:
 
 ```bash
-pip install pyinstaller
-pyinstaller pyinstaller\windows.spec
+pytest test_tracker.py
 ```
 
-The built app will be in `pyinstaller\dist\Spendly.exe`.
-
-## Building the installer
-
-Requires [Inno Setup](https://jrsoftware.org/isinfo.php) and the `.exe` above already built.
+Run the API tests with:
 
 ```bash
-iscc installer\setup.iss
+python test_api.py
 ```
 
-The installer will be in `installer\dist\Spendly-Setup-1.0.0.exe`.
-
-## Running tests
+Or run the complete pytest suite:
 
 ```bash
-pytest test_tracker.py    # core tracker logic — 19 tests
-python test_api.py        # API endpoints — 24 tests
+pytest
 ```
 
-## Project structure
+## Windows build
 
+Spendly can be packaged as a Windows executable with its wallet icon embedded in the application.
+
+### Build the executable
+
+Install PyInstaller if it is not already installed:
+
+```powershell
+python -m pip install pyinstaller
 ```
-Spendly/
-├── main.py                        # Interactive terminal CLI
-├── tracker.py                     # ExpenseTracker — storage & business logic (CSV, Decimal math)
-├── api.py                         # FastAPI app — REST endpoints, serves the web frontend
-├── desktop.py                     # pywebview desktop wrapper around the web app
-├── expense-tracker-preview.html   # Web frontend (vanilla HTML/CSS/JS)
-├── pyinstaller/
-│   └── windows.spec                # PyInstaller build spec for the desktop app
-├── installer/
-│   └── setup.iss                   # Inno Setup script for the Windows installer
-├── test_tracker.py                # pytest suite for tracker.py / CLI logic
-├── test_api.py                    # FastAPI TestClient suite for api.py
-└── requirements.txt
+
+Then run the project-root command:
+
+```powershell
+pyinstaller packaging\spendly.spec
 ```
+
+The generated executable is placed under the `dist` directory.
+
+### Create the installer
+
+The repository also includes an Inno Setup script:
+
+```text
+packaging/Spendly.iss
+```
+
+Open the script with [Inno Setup](https://jrsoftware.org/isinfo.php) and compile it to create a Windows installer with Spendly branding and shortcuts.
+
+## Design & branding
+
+Spendly uses a simple wallet-based visual identity designed around:
+
+- Deep green as the primary brand color
+- Mint and cream as supporting UI colors
+- A wallet icon as the app mark
+- The **Spendly** wordmark for the application name
+- Original category colors preserved to keep categories visually distinguishable
+
+The primary app icon assets live in `assets/`, while the Windows `.ico` file lives in `packaging/`.
 
 ## Roadmap
 
-- [x] Wrap the built `.exe` in an Inno Setup installer (Start Menu shortcut, uninstaller)
+Potential future improvements include:
+
+- [ ] Move from CSV to SQLite
+- [ ] Add SQLAlchemy-based data access
+- [ ] User accounts and authentication
+- [ ] Budget tracking
+- [ ] Dashboard charts and spending trends
+- [ ] More advanced date-range filtering
+- [ ] CSV export/import tools
+- [ ] PostgreSQL support for deployed environments
+- [ ] Dockerized deployment
+- [ ] CI pipeline for automated tests
+
+## Contributing
+
+This is currently a personal project, but contributions and suggestions are welcome. If you find a bug or have an idea for an improvement, open an issue or submit a pull request.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+Spendly is released under the **MIT License**. See [`LICENSE`](LICENSE) for details.
+
+---
+
+<div align="center">
+  <img src="assets/spendly-icon-64.png" alt="Spendly wallet" width="48">
+  <br>
+  <strong>Spendly</strong> · Track your spending. Stay in control.
+</div>
