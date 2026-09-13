@@ -6,6 +6,7 @@ from tracker import ExpenseTracker
 from typing import Literal, Optional
 import datetime
 import os
+import sys
 
 CATEGORIES = ["Food", "Transport", "Entertainment", "Education", "Bills", "Other"]
 
@@ -46,7 +47,17 @@ months = {"1" : "January",
 
 app = FastAPI()
 
-FRONTEND_PATH = os.path.join(os.path.dirname(__file__), "expense-tracker-preview.html")
+def resource_path(relative_path):
+    """Resolve a path to a bundled data file. When run from source,
+    that's just next to this file. When frozen by PyInstaller, __file__
+    no longer points to a real path on disk (the source is packed into
+    an archive), so bundled data files must be found via sys._MEIPASS,
+    the temp directory PyInstaller extracts them to at runtime."""
+    base_path = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
+
+FRONTEND_PATH = resource_path("expense-tracker-preview.html")
 
 et = ExpenseTracker()
 

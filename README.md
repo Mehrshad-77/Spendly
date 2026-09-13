@@ -29,6 +29,7 @@
 - **API:** FastAPI + Pydantic, served with Uvicorn
 - **Storage:** CSV, with `decimal.Decimal` for exact currency arithmetic
 - **Frontend:** Vanilla HTML/CSS/JS — no framework, no build step, served directly by FastAPI
+- **Desktop:** pywebview (native window around the web app), packaged with PyInstaller
 - **Testing:** pytest (core logic + CLI) and FastAPI's `TestClient` (API)
 
 ## Getting started
@@ -60,6 +61,23 @@ uvicorn api:app --reload
 
 Then open **http://127.0.0.1:8000** — the API and frontend are served from the same app, so nothing else needs to run.
 
+### Run the desktop app
+
+```bash
+python desktop.py
+```
+
+Opens the same web app in a native window. If no GUI backend is available (e.g. GTK/Qt aren't installed), it falls back to running headless in the terminal — press Ctrl+C to stop.
+
+## Building a Windows executable
+
+```bash
+pip install pyinstaller
+pyinstaller pyinstaller\windows.spec
+```
+
+The built app will be in `pyinstaller\dist\ExpenseTracker.exe`.
+
 ## Running tests
 
 ```bash
@@ -74,7 +92,10 @@ ExpenseTracker/
 ├── main.py                        # Interactive terminal CLI
 ├── tracker.py                     # ExpenseTracker — storage & business logic (CSV, Decimal math)
 ├── api.py                         # FastAPI app — REST endpoints, serves the web frontend
+├── desktop.py                     # pywebview desktop wrapper around the web app
 ├── expense-tracker-preview.html   # Web frontend (vanilla HTML/CSS/JS)
+├── pyinstaller/
+│   └── windows.spec                # PyInstaller build spec for the desktop app
 ├── test_tracker.py                # pytest suite for tracker.py / CLI logic
 ├── test_api.py                    # FastAPI TestClient suite for api.py
 └── requirements.txt
@@ -82,7 +103,7 @@ ExpenseTracker/
 
 ## Roadmap
 
-- [ ] Package the web app as a desktop app with a `pywebview` wrapper
+- [ ] Wrap the built `.exe` in an Inno Setup installer (Start Menu shortcut, uninstaller)
 
 ## License
 
