@@ -113,7 +113,19 @@ python -m pip install -r requirements.txt
 
 ## Run Spendly
 
-### Web application
+### 1. Desktop app
+
+Spendly includes a `pywebview` desktop wrapper that opens the application in a native desktop window.
+
+Run:
+
+```bash
+python desktop.py
+```
+
+This starts the local API automatically and launches the Spendly interface as a desktop application.
+
+### 2. Web app
 
 Start the FastAPI server:
 
@@ -127,25 +139,33 @@ Then open:
 http://127.0.0.1:8000
 ```
 
-The API and frontend are served by the same FastAPI application, so no separate frontend development server is needed.
+The frontend is served directly by FastAPI, so no separate frontend development server is required.
 
-### Command-line application
+### 3. FastAPI
 
-Run the CLI with:
+You can run Spendly as an API service independently with:
+
+```bash
+uvicorn api:app --reload
+```
+
+The interactive API documentation is available at:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+The API provides endpoints for managing expenses, categories, filtering, and spending summaries.
+
+### 4. Terminal CLI
+
+Run the interactive terminal version with:
 
 ```bash
 python main.py
 ```
 
-### Desktop application
-
-Spendly also includes a `pywebview` wrapper in `desktop.py`. Run it with:
-
-```bash
-python desktop.py
-```
-
-This starts the local API and opens the Spendly interface in a native desktop window.
+The CLI provides expense management, searching, filtering, sorting, and spending-summary functionality.
 
 ## API
 
