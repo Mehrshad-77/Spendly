@@ -1,4 +1,4 @@
-<h1 align="center">ExpenseTracker</h1>
+<h1 align="center">SPENDLY</h1>
 
 <p align="center">
   A personal expense tracker with exact decimal money math — use it as a terminal app or a local web app, both backed by the same core.
