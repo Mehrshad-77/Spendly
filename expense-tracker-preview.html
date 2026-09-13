@@ -3,35 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Expense tracker</title>
+<title>Spendly — Expense Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --sky: #3B82F6;
-    --sky-bright: #60A5FA;
-    --sky-deep: #1D4ED8;
-    --sky-soft: #DBEAFE;
-    --sun: #FBBF24;
-    --sun-deep: #D97706;
-    --sun-soft: #FEF3C7;
-    --leaf: #22C55E;
-    --leaf-soft: #DCFCE7;
-    --leaf-deep: #16A34A;
-    --coral: #F87171;
-    --coral-soft: #FEE2E2;
-    --coral-deep: #B91C1C;
-    --berry-soft: #F3E8FF;
-    --berry-deep: #7E22CE;
-    --bg: #FFFFFF;
-    --surface: #F8FAFC;
+    /* Spendly brand palette */
+    --brand-deep: #0F5132;
+    --brand-primary: #2E7D5B;
+    --brand-mint: #A7D7C5;
+    --brand-cream: #F8F7F2;
+    --brand-cream-deep: #EEECE3;
+
+    --sky: var(--brand-primary);
+    --sky-bright: var(--brand-mint);
+    --sky-deep: var(--brand-deep);
+    --sky-soft: #DDEFE7;
+    --sun: #D9B95B;
+    --sun-deep: #6F5A1F;
+    --sun-soft: #F3EACB;
+    --leaf: var(--brand-primary);
+    --leaf-soft: #DDEFE7;
+    --leaf-deep: var(--brand-deep);
+    --coral: #C96B62;
+    --coral-soft: #F4E0DD;
+    --coral-deep: #8C342D;
+    --berry-soft: #E5EDE9;
+    --berry-deep: #315D4A;
+
+    --bg: var(--brand-cream);
+    --surface: #F2F1EB;
     --surface-elevated: #FFFFFF;
-    --surface-sunken: #F1F5F9;
-    --ink: #0F172A;
-    --ink-muted: #475569;
-    --ink-subtle: #94A3B8;
-    --outline: #E2E8F0;
+    --surface-sunken: var(--brand-cream-deep);
+    --ink: #17352A;
+    --ink-muted: #4D6259;
+    --ink-subtle: #81938B;
+    --outline: #D7DED9;
     --font-display: 'Nunito', 'Quicksand', sans-serif;
     --font-body: 'Atkinson Hyperlegible', 'Nunito Sans', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
@@ -386,8 +394,8 @@
 <body>
 <div class="wrap">
   <header>
-    <h1>Expense tracker</h1>
-    <p>See where your money's going, one entry at a time.</p>
+    <h1>$pendly</h1>
+    <p>Track your spending. Stay in control.</p>
   </header>
 
   <p class="conn-error" id="connError" style="display:none;">Can't reach the server. Make sure it's running, then reload the page.</p>
@@ -504,15 +512,17 @@
   // source of truth (the backend's CATEGORIES) instead of being duplicated here.
   let CATS = [];
 
+  // Category colors are intentionally kept unchanged from the original Spendly UI.
+  // The new brand palette is used for the overall interface, not for category tags.
   const CAT_COLORS = {
-    Food:          { bg: 'var(--sun-soft)',    text: 'var(--sun-deep)' },
-    Transport:     { bg: 'var(--sky-soft)',    text: 'var(--sky-deep)' },
-    Entertainment: { bg: 'var(--berry-soft)',  text: 'var(--berry-deep)' },
-    Education:     { bg: 'var(--leaf-soft)',   text: 'var(--leaf-deep)' },
-    Bills:         { bg: 'var(--surface-sunken)', text: 'var(--ink-muted)' },
-    Other:         { bg: 'var(--surface-sunken)', text: 'var(--ink-subtle)' }
+    Food:          { bg: '#FEF3C7', text: '#D97706' },
+    Transport:     { bg: '#DBEAFE', text: '#1D4ED8' },
+    Entertainment: { bg: '#F3E8FF', text: '#7E22CE' },
+    Education:     { bg: '#DCFCE7', text: '#16A34A' },
+    Bills:         { bg: '#F1F5F9', text: '#475569' },
+    Other:         { bg: '#F1F5F9', text: '#94A3B8' }
   };
-  const DEFAULT_CAT_COLOR = { bg: 'var(--surface-sunken)', text: 'var(--ink-subtle)' };
+  const DEFAULT_CAT_COLOR = { bg: '#F1F5F9', text: '#94A3B8' };
   function colorFor(category) { return CAT_COLORS[category] || DEFAULT_CAT_COLOR; }
 
   let expenses = [];
